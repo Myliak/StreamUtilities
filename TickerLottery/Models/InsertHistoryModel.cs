@@ -1,4 +1,5 @@
-﻿using TicketLottery.Enums;
+﻿using System.Text.Json.Serialization;
+using TicketLottery.Enums;
 
 namespace TicketLottery.Models
 {
@@ -9,5 +10,11 @@ namespace TicketLottery.Models
         public int Count { get; set; }
         public TicketType Type { get; set; }
         public DateTime InsertTime { get; set; }
+    }
+
+    [JsonSerializable(typeof(IEnumerable<InsertHistoryModel>))]
+    public partial class InsertHistoryJsonContext : JsonSerializerContext
+    {
+        
     }
 }
