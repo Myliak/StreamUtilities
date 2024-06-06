@@ -3,9 +3,11 @@ using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Text.Json;
+using System.Windows.Input;
 using TicketLottery.Models;
+using TicketLottery.Utilities;
 
-namespace TicketLottery.Viewmodels
+namespace TicketLottery.ViewModels
 {
     public partial class TicketInputViewModel : ObservableObject
     {
@@ -22,9 +24,19 @@ namespace TicketLottery.Viewmodels
         [ObservableProperty]
         private ObservableCollection<InsertHistoryModel> _insertHistory;
 
+        [ObservableProperty]
+        private LotterySettingsViewModel _settings;
+
         public TicketInputViewModel()
         {
             InsertHistory = new ObservableCollection<InsertHistoryModel>();
+            Settings = new LotterySettingsViewModel();
+        }
+
+        [RelayCommand]
+        private void Initialize()
+        {
+            InsertHistory = new ObservableCollection<InsertHistoryModel>(TicketWriter.Load());
         }
 
         [RelayCommand(CanExecute = nameof(CanAddInputHistory))]
@@ -39,12 +51,7 @@ namespace TicketLottery.Viewmodels
                 Type = MoneySwitch ? Enums.TicketType.Donation : Enums.TicketType.Subscribe,
             });
 
-            using (var fileStream = new FileStream(Path.Combine(Environment.CurrentDirectory, "data.json"), FileMode.OpenOrCreate))
-            using (Utf8JsonWriter writer = new Utf8JsonWriter(fileStream))
-            {
-                JsonDocument json = JsonSerializer.SerializeToDocument(InsertHistory, InsertHistoryJsonContext.Default.IEnumerableInsertHistoryModel);
-                json.WriteTo(writer);
-            }
+            Save();
 
             Username = string.Empty;
             Count = 0;
@@ -53,6 +60,21 @@ namespace TicketLottery.Viewmodels
         private bool CanAddInputHistory()
         {
             return !string.IsNullOrEmpty(Username);
+        }
+
+        [RelayCommand]
+        private void HandleInput(Key key)
+        {
+            if (key == Key.Enter && CanAddInputHistory())
+            {
+                AddInputHistory();
+            }
+        }
+
+        [RelayCommand]
+        private void Save()
+        {
+            TicketWriter.Save(InsertHistory);
         }
     }
 }

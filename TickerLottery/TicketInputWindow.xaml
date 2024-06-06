@@ -2,71 +2,127 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:b="clr-namespace:TicketLottery.Behaviors"
+        xmlns:conv="clr-namespace:TicketLottery.Converters"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:dgx="urn:tom-englert.de/DataGridExtensions"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:local="clr-namespace:TickerLottery"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
-        xmlns:vm="clr-namespace:TicketLottery.Viewmodels"
-        Title="MainWindow"
-        Width="800"
-        Height="450"
+        xmlns:vm="clr-namespace:TicketLottery.ViewModels"
+        Title="Stream Utilites"
+        Width="1200"
+        Height="700"
         d:DataContext="{d:DesignInstance Type={x:Type vm:TicketInputViewModel}}"
+        xml:lang="cs-CZ"
         Style="{StaticResource MaterialDesignWindow}"
         mc:Ignorable="d">
+    <Window.Resources>
+        <ResourceDictionary>
+            <conv:KeyDownEventArgsConverter x:Key="KeyDownEventArgsConverter" />
+        </ResourceDictionary>
+    </Window.Resources>
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding InitializeCommand}" />
+        </i:EventTrigger>
+        <i:EventTrigger EventName="KeyDown">
+            <i:InvokeCommandAction Command="{Binding HandleInputCommand}"
+                                   EventArgsConverter="{StaticResource KeyDownEventArgsConverter}"
+                                   PassEventArgsToCommand="True" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <Window.DataContext>
         <vm:TicketInputViewModel />
     </Window.DataContext>
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition />
-        </Grid.RowDefinitions>
+    <md:DialogHost>
         <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
-            <TextBox Margin="8"
-                     VerticalAlignment="Center"
-                     md:HintAssist.Hint="Username"
-                     Text="{Binding Username}" />
-            <TextBox Grid.Column="1"
-                     Margin="8"
-                     VerticalAlignment="Center"
-                     md:HintAssist.Hint="Count"
-                     Text="{Binding Count}">
-                <i:Interaction.Behaviors>
-                    <b:NumericTextBoxBehavior />
-                </i:Interaction.Behaviors>
-            </TextBox>
-            <ToggleButton Grid.Column="2"
-                          Margin="8,0"
-                          md:ToggleButtonAssist.OnContent="{md:PackIcon Kind=Money}"
-                          Content="{md:PackIcon Kind=User}"
-                          IsChecked="{Binding MoneySwitch}"
-                          Style="{StaticResource MaterialDesignSwitchToggleButton}" />
-            <Button Grid.Column="3"
-                    Margin="8"
-                    Command="{Binding AddInputHistoryCommand}"
-                    Content="{md:PackIcon Kind=Plus}"
-                    Style="{StaticResource MaterialDesignIconButton}" />
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <md:ColorZone Padding="8" Mode="PrimaryLight">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <!--<ToggleButton Style="{StaticResource MaterialDesignHamburgerToggleButton}" TBC :)/>-->
+                    <TextBlock Grid.Column="1"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               Style="{StaticResource MaterialDesignHeadline5TextBlock}"
+                               Text="Ticket Lottery" />
+                    <Button Grid.Column="2"
+                            Command="{x:Static md:DialogHost.OpenDialogCommand}"
+                            Content="{md:PackIcon Settings}"
+                            Style="{StaticResource MaterialDesignIconButton}" />
+                </Grid>
+            </md:ColorZone>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBox Margin="8"
+                         VerticalAlignment="Center"
+                         md:HintAssist.Hint="Username"
+                         Style="{StaticResource MaterialDesignFilledTextBox}"
+                         Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBox Grid.Column="1"
+                         Margin="8"
+                         VerticalAlignment="Center"
+                         md:HintAssist.Hint="Count"
+                         Style="{StaticResource MaterialDesignFilledTextBox}"
+                         Text="{Binding Count}">
+                    <i:Interaction.Behaviors>
+                        <b:NumericTextBoxBehavior />
+                    </i:Interaction.Behaviors>
+                </TextBox>
+                <ToggleButton Grid.Column="2"
+                              Margin="8,0"
+                              md:ToggleButtonAssist.OnContent="{md:PackIcon Kind=Money}"
+                              Content="{md:PackIcon Kind=User}"
+                              IsChecked="{Binding MoneySwitch}"
+                              Style="{StaticResource MaterialDesignSwitchToggleButton}" />
+                <Button Grid.Column="3"
+                        Margin="8"
+                        Command="{Binding AddInputHistoryCommand}"
+                        Content="{md:PackIcon Kind=Plus}"
+                        Style="{StaticResource MaterialDesignIconButton}" />
+            </Grid>
+            <DataGrid Grid.Row="2"
+                      dgx:DataGridFilter.IsAutoFilterEnabled="True"
+                      AutoGenerateColumns="False"
+                      CanUserAddRows="False"
+                      ItemsSource="{Binding InsertHistory}"
+                      SelectionUnit="FullRow">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="CellEditEnding">
+                        <i:InvokeCommandAction Command="{Binding SaveCommand}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Width="*"
+                                        Binding="{Binding Username, UpdateSourceTrigger=PropertyChanged}"
+                                        Header="Username" />
+                    <DataGridTextColumn MinWidth="100"
+                                        Binding="{Binding Count, UpdateSourceTrigger=PropertyChanged}"
+                                        Header="Count" />
+                    <DataGridTextColumn MinWidth="100"
+                                        Binding="{Binding Type, UpdateSourceTrigger=PropertyChanged}"
+                                        Header="Type" />
+                    <DataGridTextColumn MinWidth="100"
+                                        Binding="{Binding InsertTime, StringFormat=g}"
+                                        Header="Insert Time"
+                                        IsReadOnly="True" />
+                </DataGrid.Columns>
+            </DataGrid>
         </Grid>
-        <DataGrid Grid.Row="1"
-                  dgx:DataGridFilter.IsAutoFilterEnabled="True"
-                  AutoGenerateColumns="False"
-                  IsReadOnly="True"
-                  ItemsSource="{Binding InsertHistory}">
-            <DataGrid.Columns>
-                <DataGridTextColumn Width="*"
-                                    Binding="{Binding Username}"
-                                    Header="Username" />
-                <DataGridTextColumn Binding="{Binding Count}" Header="Count" />
-                <DataGridTextColumn Binding="{Binding Type}" Header="Type" />
-            </DataGrid.Columns>
-        </DataGrid>
-    </Grid>
+    </md:DialogHost>
+
 </Window>

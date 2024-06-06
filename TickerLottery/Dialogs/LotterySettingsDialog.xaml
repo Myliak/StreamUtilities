@@ -1,0 +1,24 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:b="clr-namespace:TicketLottery.Behaviors"
+                    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+                    xmlns:p="clr-namespace:TicketLottery.Properties"
+                    xmlns:vm="clr-namespace:TicketLottery.ViewModels">
+    <DataTemplate DataType="{x:Type p:Settings}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <TextBox Text="{Binding DonationSplit}">
+                <i:Interaction.Behaviors>
+                    <b:NumericTextBoxBehavior />
+                </i:Interaction.Behaviors>
+            </TextBox>
+            <StackPanel>
+                <Button Content="Save" Style="{StaticResource MaterialDesignRaisedButton}" />
+                <Button Content="Cancel" Style="{StaticResource MaterialDesignOutlinedButton}" />
+            </StackPanel>
+        </Grid>
+    </DataTemplate>
+</ResourceDictionary>
