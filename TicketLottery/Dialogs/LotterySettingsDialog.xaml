@@ -2,22 +2,43 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:b="clr-namespace:TicketLottery.Behaviors"
                     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+                    xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
                     xmlns:p="clr-namespace:TicketLottery.Properties"
                     xmlns:vm="clr-namespace:TicketLottery.ViewModels">
     <DataTemplate DataType="{x:Type p:Settings}">
-        <Grid>
+        <Grid Margin="8">
             <Grid.RowDefinitions>
                 <RowDefinition />
                 <RowDefinition />
             </Grid.RowDefinitions>
-            <TextBox Text="{Binding DonationSplit}">
+            <TextBox Margin="8" Text="{Binding DonationSplit, Mode=TwoWay}">
                 <i:Interaction.Behaviors>
                     <b:NumericTextBoxBehavior />
                 </i:Interaction.Behaviors>
             </TextBox>
-            <StackPanel>
-                <Button Content="Save" Style="{StaticResource MaterialDesignRaisedButton}" />
-                <Button Content="Cancel" Style="{StaticResource MaterialDesignOutlinedButton}" />
+            <StackPanel Grid.Row="1"
+                        Margin="8"
+                        Orientation="Horizontal">
+                <Button Margin="8"
+                        Command="{x:Static md:DialogHost.CloseDialogCommand}"
+                        Content="Save"
+                        Style="{StaticResource MaterialDesignRaisedButton}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <i:CallMethodAction MethodName="Save" TargetObject="{Binding Default}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
+                <Button Margin="8"
+                        Command="{x:Static md:DialogHost.CloseDialogCommand}"
+                        Content="Cancel"
+                        Style="{StaticResource MaterialDesignOutlinedButton}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <i:CallMethodAction MethodName="Reload" TargetObject="{Binding Default}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
             </StackPanel>
         </Grid>
     </DataTemplate>

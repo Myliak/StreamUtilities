@@ -1,8 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
-using System.IO;
-using System.Text.Json;
 using System.Windows.Input;
 using TicketLottery.Models;
 using TicketLottery.Utilities;
@@ -24,13 +22,9 @@ namespace TicketLottery.ViewModels
         [ObservableProperty]
         private ObservableCollection<InsertHistoryModel> _insertHistory;
 
-        [ObservableProperty]
-        private LotterySettingsViewModel _settings;
-
         public TicketInputViewModel()
         {
             InsertHistory = new ObservableCollection<InsertHistoryModel>();
-            Settings = new LotterySettingsViewModel();
         }
 
         [RelayCommand]

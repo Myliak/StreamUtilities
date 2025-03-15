@@ -9,6 +9,7 @@
         xmlns:local="clr-namespace:TicketLottery"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:p="clr-namespace:TicketLottery.Properties"
         xmlns:vm="clr-namespace:TicketLottery.ViewModels"
         Title="Stream Utilites"
         Width="1200"
@@ -19,7 +20,12 @@
         mc:Ignorable="d">
     <Window.Resources>
         <ResourceDictionary>
-            <conv:KeyDownEventArgsConverter x:Key="KeyDownEventArgsConverter" />
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Dialogs/LotterySettingsDialog.xaml" />
+                <ResourceDictionary>
+                    <conv:KeyDownEventArgsConverter x:Key="KeyDownEventArgsConverter" />
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
     <i:Interaction.Triggers>
@@ -49,7 +55,6 @@
                         <ColumnDefinition />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
-                    <!--<ToggleButton Style="{StaticResource MaterialDesignHamburgerToggleButton}" TBC :)/>-->
                     <TextBlock Grid.Column="1"
                                HorizontalAlignment="Center"
                                VerticalAlignment="Center"
@@ -57,6 +62,7 @@
                                Text="Ticket Lottery" />
                     <Button Grid.Column="2"
                             Command="{x:Static md:DialogHost.OpenDialogCommand}"
+                            CommandParameter="{x:Static p:Settings.Default}"
                             Content="{md:PackIcon Settings}"
                             Style="{StaticResource MaterialDesignIconButton}" />
                 </Grid>
