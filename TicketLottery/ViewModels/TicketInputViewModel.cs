@@ -22,15 +22,20 @@ namespace TicketLottery.ViewModels
         [ObservableProperty]
         private ObservableCollection<InsertHistoryModel> _insertHistory;
 
+        [ObservableProperty]
+        private List<TicketModel> _tickets;
+
         public TicketInputViewModel()
         {
             InsertHistory = new ObservableCollection<InsertHistoryModel>();
+            Tickets = new List<TicketModel>();
         }
 
         [RelayCommand]
         private void Initialize()
         {
-            InsertHistory = new ObservableCollection<InsertHistoryModel>(TicketWriter.Load());
+            InsertHistory = [.. TicketWriter.Load()];
+            Tickets = TicketCalculator.GetTickets(InsertHistory).ToList();
         }
 
         [RelayCommand(CanExecute = nameof(CanAddInputHistory))]
@@ -69,6 +74,7 @@ namespace TicketLottery.ViewModels
         private void Save()
         {
             TicketWriter.Save(InsertHistory);
+            Tickets = TicketCalculator.GetTickets(InsertHistory).ToList();
         }
     }
 }
