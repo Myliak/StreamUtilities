@@ -58,8 +58,8 @@ jobs:
     env:
       Solution_Name: StreamUtilities.sln
       Test_Project_Path: TicketLottery.Tests\TicketLottery.Tests.csproj
-      Wap_Project_Directory: StreamUtilities.Package
-      Wap_Project_Path: StreamUtilities.Package\StreamUtilities.Package.wapproj
+      Wap_Project_Directory: TicketLottery.Package
+      Wap_Project_Path: TicketLottery.Package\TicketLottery.Package.wapproj
 
     steps:
     - name: Checkout
