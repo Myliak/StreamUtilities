@@ -5,7 +5,9 @@ VisualStudioVersion = 17.8.34322.80
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicketLottery", "TicketLottery\TicketLottery.csproj", "{FF47288D-A5B1-4037-B712-4CC7FF7D731C}"
 EndProject
-Project("{C7167F0D-BC9F-4E6E-AFE1-012C56B48DB5}") = "StreamUtilitiesPackage", "StreamUtilitiesPackage\StreamUtilitiesPackage.wapproj", "{A9DA08D4-9DD7-4A15-B87C-AB85215A5973}"
+Project("{C7167F0D-BC9F-4E6E-AFE1-012C56B48DB5}") = "StreamUtilities.Package", "StreamUtilitiesPackage\StreamUtilities.Package.wapproj", "{A9DA08D4-9DD7-4A15-B87C-AB85215A5973}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicketLottery.Tests", "TicketLottery.Tests\TicketLottery.Tests.csproj", "{F2A34423-04E6-4012-B567-DFA70CF90513}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -71,6 +73,26 @@ Global
 		{A9DA08D4-9DD7-4A15-B87C-AB85215A5973}.Release|x86.ActiveCfg = Release|x86
 		{A9DA08D4-9DD7-4A15-B87C-AB85215A5973}.Release|x86.Build.0 = Release|x86
 		{A9DA08D4-9DD7-4A15-B87C-AB85215A5973}.Release|x86.Deploy.0 = Release|x86
+		{F2A34423-04E6-4012-B567-DFA70CF90513}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F2A34423-04E6-4012-B567-DFA70CF90513}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F2A34423-04E6-4012-B567-DFA70CF90513}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{F2A34423-04E6-4012-B567-DFA70CF90513}.Debug|ARM.Build.0 = Debug|Any CPU
+		{F2A34423-04E6-4012-B567-DFA70CF90513}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{F2A34423-04E6-4012-B567-DFA70CF90513}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{F2A34423-04E6-4012-B567-DFA70CF90513}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{F2A34423-04E6-4012-B567-DFA70CF90513}.Debug|x64.Build.0 = Debug|Any CPU
+		{F2A34423-04E6-4012-B567-DFA70CF90513}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F2A34423-04E6-4012-B567-DFA70CF90513}.Debug|x86.Build.0 = Debug|Any CPU
+		{F2A34423-04E6-4012-B567-DFA70CF90513}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F2A34423-04E6-4012-B567-DFA70CF90513}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F2A34423-04E6-4012-B567-DFA70CF90513}.Release|ARM.ActiveCfg = Release|Any CPU
+		{F2A34423-04E6-4012-B567-DFA70CF90513}.Release|ARM.Build.0 = Release|Any CPU
+		{F2A34423-04E6-4012-B567-DFA70CF90513}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{F2A34423-04E6-4012-B567-DFA70CF90513}.Release|ARM64.Build.0 = Release|Any CPU
+		{F2A34423-04E6-4012-B567-DFA70CF90513}.Release|x64.ActiveCfg = Release|Any CPU
+		{F2A34423-04E6-4012-B567-DFA70CF90513}.Release|x64.Build.0 = Release|Any CPU
+		{F2A34423-04E6-4012-B567-DFA70CF90513}.Release|x86.ActiveCfg = Release|Any CPU
+		{F2A34423-04E6-4012-B567-DFA70CF90513}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
