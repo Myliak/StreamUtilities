@@ -25,16 +25,6 @@ jobs:
       with:
         useConfigFile: true
 
-    - name: Increment Patch Version
-      uses: action-pack/increment@v2.14
-      id: increment
-      with:
-        name: 'steps.version.outputs.patch'
-        token: ${{ secrets.REPO_ACCESS_TOKEN }}
-
-    - name: Create New Tag Variable
-      run: echo "${steps.version.outputs.major}.${steps.version.outputs.minor}.${steps.increment.outputs.value} >> $tag
-      
     - name: Set Up Git
       run: |
         git config user.name "github-actions[bot]"
@@ -46,7 +36,9 @@ jobs:
       run: |
         git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/Myliak/StreamUtilities.git
         
-    - name: Add and Push Tag to Git
+    - name: Create Tag
+      env:
+        tag: ${{ env.majorMinorPatch + 1 }}
       run: |
         git tag $tag
         git push origin $tag
@@ -54,6 +46,7 @@ jobs:
     - name: Release New Version
       env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          tag: ${{ env.majorMinorPatch + 1 }}
       run: |
         gh release create "$tag" \
             --repo="$GITHUB_REPOSITORY" \
