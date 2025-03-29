@@ -12,6 +12,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Include="Static\reshot-icon-toolbox-V2XS6Z3EUY.svg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
     <PackageReference Include="DataGridExtensions" Version="2.6.0" />
     <PackageReference Include="MaterialDesignThemes" Version="5.2.1" />
