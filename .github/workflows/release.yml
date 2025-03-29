@@ -37,14 +37,16 @@ jobs:
         git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/Myliak/StreamUtilities.git
         
     - name: Create Tag
+      env:
+        tag: ${{ env.majoMinorPatch }}
       run: |
-        git tag ${{ env.fullSemVer }}
-        git push origin ${{ env.fullSemVer }}
+        git tag $tag
+        git push origin $tag
 
     - name: Release New Version
       env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          tag: ${{ env.fullSemVer }}
+          tag: ${{ env.majorMinorPatch }}
       run: |
         gh release create "$tag" \
             --repo="$GITHUB_REPOSITORY" \
