@@ -8,19 +8,33 @@ jobs:
     permissions:
       contents: read
     steps:
+    - name: Set up Git
+      run: |
+        git config user.name "github-actions[bot]"
+        git config user.email "github-actions[bot]@users.noreply.github.com"
+
+    - name: Authenticate with GitHub
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/Myliak/StreamUtilities.git
+        
     - name: Checkout
       uses: actions/checkout@v4
       with:
         fetch-depth: 0
+        
     - name: Install GitVersion
       uses: gittools/actions/gitversion/setup@v3.1.11
       with:
         versionSpec: '6.0.x'
+        
     - name: Determine Version
       id: version
       uses: gittools/actions/gitversion/execute@v3.1.11
       with:
         useConfigFile: true
+        
     - name: Create Tag
       run: |
         git tag ${{ env.fullSemVer }}
