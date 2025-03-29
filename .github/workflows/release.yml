@@ -38,7 +38,7 @@ jobs:
         
     - name: Create Tag
       env:
-        tag: ${{ env.majoMinorPatch }}
+        tag: ${{ env.majorMinorPatch + 1 }}
       run: |
         git tag $tag
         git push origin $tag
@@ -46,7 +46,7 @@ jobs:
     - name: Release New Version
       env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          tag: ${{ env.majorMinorPatch }}
+          tag: ${{ env.majorMinorPatch + 1 }}
       run: |
         gh release create "$tag" \
             --repo="$GITHUB_REPOSITORY" \
