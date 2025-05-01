@@ -3,6 +3,30 @@ on:
     branches:
       - main
 jobs:
+  build:
+    runs-on: ubuntu-lates
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '9.0.x'
+
+    - name: Restore dependencies
+      run: dotnet restore
+
+    - name: Build
+      run: dotnet build --no-restore --configuration Release
+
+    - name: Publish
+      run: dotnet publish TicketLottery.csproj -c Release -p:PublishProfile=FolderProfile
+
+    - name: Archive published output
+      run: |
+        cd publish
+        zip -r ../publish.zip .
   release:
     runs-on: ubuntu-latest
     permissions:
@@ -44,12 +68,13 @@ jobs:
         git push origin $tag
 
     - name: Release New Version
+      uses: softprops/action-gh-release@v1
       env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          tag: ${{ env.majorMinorPatch }}
-      run: |
-        gh release create "$tag" \
-            --repo="$GITHUB_REPOSITORY" \
-            --title="${tag}" \
-            --generate-notes
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ env.majorMinorPatch }}
+        name: ${{ env.majorMinorPatch }}
+        files: publish.zip
+        generate_release_notes: true
+      
     
