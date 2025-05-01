@@ -39,14 +39,6 @@ jobs:
       contents: write
       actions: write
     steps:
-    - name: Download artifact
-      uses: actions/download-artifact@v4
-      with:
-        name: TicketLotteryApp
-
-    - name: Display structure of downloaded files
-      run: ls -R
-    
     - name: Checkout
       uses: actions/checkout@v4
       with:
@@ -80,7 +72,15 @@ jobs:
       run: |
         git tag $tag
         git push origin $tag
+        
+    - name: Download artifact
+      uses: actions/download-artifact@v4
+      with:
+        name: TicketLotteryApp
 
+    - name: Display structure of downloaded files
+      run: ls -R
+    
     - name: Release New Version
       uses: softprops/action-gh-release@v1
       env:
