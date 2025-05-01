@@ -43,6 +43,9 @@ jobs:
       uses: actions/download-artifact@v4
       with:
         name: TicketLotteryApp
+
+    - name: Display structure of downloaded files
+      run: ls -R
     
     - name: Checkout
       uses: actions/checkout@v4
