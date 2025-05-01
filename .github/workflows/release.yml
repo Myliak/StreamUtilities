@@ -28,6 +28,7 @@ jobs:
         cd publish
         zip -r ../publish.zip .
   release:
+    needs: build
     runs-on: ubuntu-latest
     permissions:
       contents: write
