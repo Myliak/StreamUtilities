@@ -85,7 +85,8 @@ jobs:
       with:
         tag_name: ${{ env.majorMinorPatch }}
         name: ${{ env.majorMinorPatch }}
-        files: publish.zip
+        files: TicketLotteryApp.zip
         generate_release_notes: true
+        fail_on_unmatched_files: true
       
     
