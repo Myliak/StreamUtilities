@@ -21,7 +21,7 @@ jobs:
       run: dotnet build --no-restore --configuration Release
 
     - name: Publish
-      run: dotnet publish TicketLottery.csproj -c Release -p:PublishProfile=FolderProfile
+      run: dotnet publish TicketLottery/TicketLottery.csproj -c Release -p:PublishProfile=FolderProfile
 
     - name: Archive published output
       run: |
