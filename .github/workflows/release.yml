@@ -26,6 +26,12 @@ jobs:
     - name: Zip published output
       run: Compress-Archive -Path publish\* -DestinationPath publish.zip
       shell: powershell
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: TicketLotteryApp
+        path: publish.zip
   release:
     needs: build
     runs-on: ubuntu-latest
@@ -33,6 +39,11 @@ jobs:
       contents: write
       actions: write
     steps:
+    - name: Download artifact
+      uses: actions/download-artifact@v4
+      with:
+        name: TicketLotteryApp
+    
     - name: Checkout
       uses: actions/checkout@v4
       with:
