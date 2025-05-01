@@ -4,7 +4,7 @@ on:
       - main
 jobs:
   build:
-    runs-on: ubuntu-lates
+    runs-on: windows-latest
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
@@ -21,13 +21,19 @@ jobs:
       run: dotnet build --no-restore --configuration Release
 
     - name: Publish
-      run: dotnet publish TicketLottery.csproj -c Release -p:PublishProfile=FolderProfile
+      run: dotnet publish -o ./publish TicketLottery/TicketLottery.csproj -c Release -p:PublishProfile=FolderProfile
 
-    - name: Archive published output
-      run: |
-        cd publish
-        zip -r ../publish.zip .
+    - name: Zip published output
+      run: Compress-Archive -Path publish\* -DestinationPath publish.zip
+      shell: powershell
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: TicketLotteryApp
+        path: publish.zip
   release:
+    needs: build
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -66,7 +72,15 @@ jobs:
       run: |
         git tag $tag
         git push origin $tag
+        
+    - name: Download artifact
+      uses: actions/download-artifact@v4
+      with:
+        name: TicketLotteryApp
 
+    - name: Display structure of downloaded files
+      run: ls -R
+    
     - name: Release New Version
       uses: softprops/action-gh-release@v1
       env:
@@ -76,5 +90,6 @@ jobs:
         name: ${{ env.majorMinorPatch }}
         files: publish.zip
         generate_release_notes: true
+        fail_on_unmatched_files: true
       
     
