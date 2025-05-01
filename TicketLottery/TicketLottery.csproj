@@ -9,6 +9,7 @@
     <StartupObject>TicketLottery.App</StartupObject>
     <Platforms>AnyCPU;x86;ARM32;ARM64;x64</Platforms>
     <RuntimeIdentifiers>win-x86</RuntimeIdentifiers>
+    <ApplicationIcon>Static\reshot-icon-toolbox-V2XS6Z3EUY.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
