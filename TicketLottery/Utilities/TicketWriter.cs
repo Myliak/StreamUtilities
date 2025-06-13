@@ -6,7 +6,7 @@ namespace TicketLottery.Utilities
 {
     public static class TicketWriter
     {
-        private static string JsonPath = Path.Combine(Environment.CurrentDirectory, "data.json");
+        private static string JsonPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "data.json");
 
         public static void Save(IEnumerable<InsertHistoryModel> data)
         {

@@ -31,7 +31,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: TicketLotteryApp
-        path: publish.zip
+        path: TicketLottery.zip
   release:
     needs: build
     runs-on: ubuntu-latest
@@ -88,7 +88,7 @@ jobs:
       with:
         tag_name: ${{ env.majorMinorPatch }}
         name: ${{ env.majorMinorPatch }}
-        files: publish.zip
+        files: TicketLottery.zip
         generate_release_notes: true
         fail_on_unmatched_files: true
       
