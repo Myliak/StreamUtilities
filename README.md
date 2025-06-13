@@ -3,6 +3,7 @@ This is small code project, made as a portfolio showcasing my experience in fron
 
 ## Ticket Lottery
 Application which has intuitive UI for inputting new tickets and drawing a winner. It features editable and filterable history list, ticket calculations, and a simple design with rich code base representing latest modern frontend solutions.
+![Screenshot 2025-06-13 141537](https://github.com/user-attachments/assets/ac5016d0-9a20-4c5d-a816-0575dc8b4c2f)
 
 ### How to install
 1. Download and install .NET 9 SDK https://builds.dotnet.microsoft.com/dotnet/Sdk/9.0.301/dotnet-sdk-9.0.301-win-x64.exe
