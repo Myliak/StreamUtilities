@@ -5,11 +5,13 @@
         xmlns:conv="clr-namespace:TicketLottery.Converters"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:dgx="urn:tom-englert.de/DataGridExtensions"
+        xmlns:enum="clr-namespace:TicketLottery.Enums"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:local="clr-namespace:TicketLottery"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:p="clr-namespace:TicketLottery.Properties"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:vm="clr-namespace:TicketLottery.ViewModels"
         Title="Stream Utilites"
         Width="1200"
@@ -22,8 +24,18 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Dialogs/LotterySettingsDialog.xaml" />
+                <ResourceDictionary Source="/Dialogs/SpinWinnerDialog.xaml" />
                 <ResourceDictionary>
                     <conv:KeyDownEventArgsConverter x:Key="KeyDownEventArgsConverter" />
+                </ResourceDictionary>
+                <ResourceDictionary>
+                    <ObjectDataProvider x:Key="TicketTypeData"
+                                        MethodName="GetValues"
+                                        ObjectType="{x:Type sys:Enum}">
+                        <ObjectDataProvider.MethodParameters>
+                            <x:Type TypeName="enum:TicketType" />
+                        </ObjectDataProvider.MethodParameters>
+                    </ObjectDataProvider>
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
@@ -61,8 +73,7 @@
                                Style="{StaticResource MaterialDesignHeadline5TextBlock}"
                                Text="Ticket Lottery" />
                     <Button Grid.Column="2"
-                            Command="{x:Static md:DialogHost.OpenDialogCommand}"
-                            CommandParameter="{x:Static p:Settings.Default}"
+                            Command="{Binding ShowSettingsDialogCommand}"
                             Content="{md:PackIcon Settings}"
                             Style="{StaticResource MaterialDesignIconButton}" />
                 </Grid>
@@ -133,9 +144,10 @@
                         <DataGridTextColumn MinWidth="100"
                                             Binding="{Binding Count, UpdateSourceTrigger=PropertyChanged}"
                                             Header="Count" />
-                        <DataGridTextColumn MinWidth="100"
-                                            Binding="{Binding Type, UpdateSourceTrigger=PropertyChanged}"
-                                            Header="Type" />
+                        <DataGridComboBoxColumn MinWidth="120"
+                                                Header="Type"
+                                                ItemsSource="{Binding Source={StaticResource TicketTypeData}, Mode=OneWay}"
+                                                SelectedValueBinding="{Binding Type, UpdateSourceTrigger=PropertyChanged}" />
                         <DataGridTextColumn MinWidth="100"
                                             Binding="{Binding InsertTime, StringFormat=g}"
                                             Header="Insert Time"
@@ -156,6 +168,7 @@
                               AutoGenerateColumns="False"
                               BorderThickness="2"
                               CanUserAddRows="False"
+                              IsReadOnly="True"
                               ItemsSource="{Binding Tickets}"
                               SelectionUnit="FullRow">
                         <DataGrid.Columns>
@@ -169,6 +182,7 @@
                     </DataGrid>
                     <Button Grid.Row="1"
                             HorizontalAlignment="Center"
+                            Command="{Binding ShowSpinWinnerDialogCommand}"
                             Content="Spin!" />
                 </Grid>
             </Grid>

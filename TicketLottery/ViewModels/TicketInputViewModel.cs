@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using MaterialDesignThemes.Wpf;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using TicketLottery.Models;
@@ -75,6 +76,18 @@ namespace TicketLottery.ViewModels
         {
             TicketWriter.Save(InsertHistory);
             Tickets = TicketCalculator.GetTickets(InsertHistory).ToList();
+        }
+
+        [RelayCommand]
+        private async Task ShowSpinWinnerDialog()
+        {
+            await DialogHost.Show(new SpinWinnerViewModel(Tickets));
+        }
+
+        [RelayCommand]
+        private async Task ShowSettingsDialog()
+        {
+            await DialogHost.Show(Properties.Settings.Default);
         }
     }
 }

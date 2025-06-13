@@ -11,7 +11,10 @@
                 <RowDefinition />
                 <RowDefinition />
             </Grid.RowDefinitions>
-            <TextBox Margin="8" Text="{Binding DonationSplit, Mode=TwoWay}">
+            <TextBox Margin="8"
+                     md:HintAssist.Hint="Donation Split"
+                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                     Text="{Binding DonationSplit, Mode=TwoWay}">
                 <i:Interaction.Behaviors>
                     <b:NumericTextBoxBehavior />
                 </i:Interaction.Behaviors>
