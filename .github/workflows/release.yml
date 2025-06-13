@@ -24,7 +24,7 @@ jobs:
       run: dotnet publish -o ./publish TicketLottery/TicketLottery.csproj -c Release -p:PublishProfile=FolderProfile
 
     - name: Zip published output
-      run: Compress-Archive -Path publish\* -DestinationPath publish.zip
+      run: Compress-Archive -Path publish\* -DestinationPath TicketLottery.zip
       shell: powershell
 
     - name: Upload artifact
